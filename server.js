@@ -11,6 +11,10 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 8081 : process.env.PORT;
 const app = express();
 
+/***************************************************
+APPLY APPROPRIATE WEBPACK CONFIGURATIONS
+*****************************************************/
+
 if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
@@ -38,6 +42,10 @@ if (isDeveloping) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 }
+
+/******************************************************
+SET UP SOCKET EVENTS
+******************************************************/
 
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
@@ -69,4 +77,3 @@ io.on('connection', function(socket){
 });
 
 http.listen(port)
-console.log('compiled!!!!')
