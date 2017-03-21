@@ -39,9 +39,34 @@ if (isDeveloping) {
   });
 }
 
-app.listen(port, '0.0.0.0', function onStart(err) {
-  if (err) {
-    console.log(err);
-  }
-  console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
+var http = require('http').Server(app)
+var io = require('socket.io')(http)
+io.on('connection', function(socket){
+  var username;
+  console.log('connected!')
+  
+  socket.on('user:join', function(name){
+    console.log(name + ' joined')
+    username = name
+    users.push(name)
+    io.emit('user:join', name, users)
+  })
+
+  socket.on('send:message', function(message){
+    console.log('message sent!')
+    io.emit('send:message', message)
+  })
+
+  socket.on('disconnect', function(){
+    console.log(username + ' left')
+    var index = users.indexOf(username)
+    users.splice(index, 1)
+    if (username !== undefined) {
+      io.emit('user:left', {name: username, users: users})
+    }
+  })
+
 });
+
+http.listen(port)
+console.log('compiled!!!!')
