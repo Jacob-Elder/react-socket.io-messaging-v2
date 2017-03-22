@@ -21,7 +21,6 @@ class UsersList extends React.Component {
 			</div>
 		)
 	}
-
 }
 
 UsersList.propTypes = {
