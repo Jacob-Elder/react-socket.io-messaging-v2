@@ -1,11 +1,10 @@
 import React from 'react'
-import './App.css'
 import UsersList from './components/UsersList/UsersList.js'
 import MessageList from './components/MessageList/MessageList.js'
 import MessageForm from './components/MessageForm/MessageForm.js'
 import PickUsername from './components/PickUsername/PickUsername.js'
 import io from 'socket.io-client'
-const socket = io.connect('10.0.1.19:8081')
+const socket = io.connect('http://react-messaging.us-west-2.elasticbeanstalk.com/')
 var messageList;
 var newUser;
 
