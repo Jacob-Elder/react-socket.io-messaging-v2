@@ -10,6 +10,7 @@ const config = require('./webpack.config.js');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 8081 : process.env.PORT;
 const app = express();
+const util = require('util')
 
 /***************************************************
 APPLY APPROPRIATE WEBPACK CONFIGURATIONS
@@ -50,6 +51,7 @@ SET UP SOCKET EVENTS
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var users = []
+var messages = []
 io.on('connection', function(socket){
   var username;
   console.log('connected!')
@@ -58,11 +60,15 @@ io.on('connection', function(socket){
     console.log(name + ' joined')
     username = name
     users.push(name)
-    io.emit('user:join', name, users)
+    messages.push({ user: 'BOT', text: name + ' joined'})
+    io.emit('user:join', name, users, messages)
   })
 
   socket.on('send:message', function(message){
     console.log('message sent!')
+    messages.push(message)
+    console.log('all messages:   ' + messages)
+    console.log(util.inspect(messages, false, null))
     io.emit('send:message', message)
   })
 

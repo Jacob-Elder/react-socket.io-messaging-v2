@@ -49,13 +49,11 @@ class App extends React.Component {
     this.setState({messages})
   }
 
-  _userJoined (name, users) {
+  _userJoined (name, users, messages) {
     console.log(name + ' joined')
-    var {messages} = this.state
-    messages.push({ user: 'BOT', text: name + ' joined'})
     this.setState({
       users: users,
-      messages
+      messages: messages
     })
   }
 
