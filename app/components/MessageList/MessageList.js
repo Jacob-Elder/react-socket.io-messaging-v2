@@ -6,7 +6,6 @@ class MessageList extends React.Component{
 	render () {
 		return (
 			<div className='messages'>
-				<h2>Coversation: </h2>
 				{
 					this.props.messages.map(function (message, i) {
 						return (

@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.css'
+import Header from './components/Header/Header.js'
 import UsersList from './components/UsersList/UsersList.js'
 import MessageList from './components/MessageList/MessageList.js'
 import MessageForm from './components/MessageForm/MessageForm.js'
@@ -59,11 +60,9 @@ class App extends React.Component {
 
   _userLeft (data) {
     console.log('user left')
-    var {messages} = this.state
-    messages.push({ user: 'BOT', text: data.name + ' left'})
     this.setState({
       users: data.users,
-      messages
+      messages: data.messages
     })
   }
 
@@ -78,6 +77,7 @@ class App extends React.Component {
     if (this.state.signedIn) {
       return (
         <div className='app-div'>
+          <Header />
           <UsersList
             users={this.state.users}
           />
