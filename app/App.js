@@ -48,6 +48,7 @@ class App extends React.Component {
     var {messages} = this.state
     messages.push(message)
     this.setState({messages})
+    window.scrollTo(0,document.body.scrollHeight)
   }
 
   _userJoined (name, users, messages) {

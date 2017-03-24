@@ -5,7 +5,7 @@ import Message from '../Message/Message.js'
 class MessageList extends React.Component{
 	render () {
 		return (
-			<div className='messages'>
+			<div className='messages' id='messages'>
 				{
 					this.props.messages.map(function (message, i) {
 						return (
