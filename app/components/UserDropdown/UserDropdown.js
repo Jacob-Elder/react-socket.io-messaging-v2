@@ -41,6 +41,7 @@ class UserDropdown extends React.Component {
 			<div>
 				<RaisedButton
 					className='button'
+					width='10px'
 					label={label}
 					onClick={this.toggleDrawer}
 					primary={true}
