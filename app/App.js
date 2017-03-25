@@ -1,7 +1,11 @@
 import React from 'react'
 import './style.css'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Header from './components/Header/Header.js'
 import UsersList from './components/UsersList/UsersList.js'
+import UserDropdown from './components/UserDropdown/UserDropdown.js'
 import MessageList from './components/MessageList/MessageList.js'
 import MessageForm from './components/MessageForm/MessageForm.js'
 import PickUsername from './components/PickUsername/PickUsername.js'
@@ -77,8 +81,10 @@ class App extends React.Component {
   render () {
     if (this.state.signedIn) {
       return (
-        <div className='app-div'>
+        <MuiThemeProvider>
+        <div>
           <Header />
+          <UserDropdown />
           <UsersList
             users={this.state.users}
           />
@@ -91,15 +97,18 @@ class App extends React.Component {
             user={this.state.username}
           />
         </div>
+        </MuiThemeProvider>
       )
     } else {
       return (
+        <MuiThemeProvider>
         <div>
           <Header />
           <PickUsername
             submitUsername={this.submitUsername}
           />
         </div>
+        </MuiThemeProvider>
       )
     }
   }
