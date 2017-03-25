@@ -84,7 +84,9 @@ class App extends React.Component {
         <MuiThemeProvider>
         <div>
           <Header />
-          <UserDropdown />
+          <UserDropdown
+            users={this.state.users}
+          />
           <UsersList
             users={this.state.users}
           />
