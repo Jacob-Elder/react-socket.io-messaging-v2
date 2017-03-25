@@ -94,9 +94,12 @@ class App extends React.Component {
       )
     } else {
       return (
-        <PickUsername
-          submitUsername={this.submitUsername}
-        />
+        <div>
+          <Header />
+          <PickUsername
+            submitUsername={this.submitUsername}
+          />
+        </div>
       )
     }
   }
