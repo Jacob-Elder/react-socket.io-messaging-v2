@@ -83,7 +83,7 @@ class App extends React.Component {
       return (
         <MuiThemeProvider>
         <div>
-          <Header />
+          <Header headerClass='app-header' />
           <UserDropdown
             users={this.state.users}
           />
@@ -105,7 +105,7 @@ class App extends React.Component {
       return (
         <MuiThemeProvider>
         <div>
-          <Header />
+          <Header headerClass='home-header' />
           <PickUsername
             submitUsername={this.submitUsername}
           />

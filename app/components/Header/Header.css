@@ -12,16 +12,16 @@
 	margin-top: 10px;
 }
 
-@media (max-width: 450px) {
-	.header h1 {
-		float: right;
-		margin-right: 10px;
+@media (max-width: 374px) {
+	.app-header h1 {
+		font-size: 1.6em;
+		margin-top: 14px;
 	}
 }
 
-@media (max-width: 374px) {
-	.header h1 {
-		font-size: 1.6em;
-		margin-top: 14px;
+@media (max-width: 450px) {
+	.app-header h1 {
+		float: right;
+		margin-right: 10px;
 	}
 }
