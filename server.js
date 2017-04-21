@@ -75,9 +75,9 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log(username + ' left')
     var index = users.indexOf(username)
-    messages.push({ user: 'BOT', text: username + ' left'})
-    users.splice(index, 1)
     if (username !== undefined) {
+      messages.push({ user: 'BOT', text: username + ' left'})
+      users.splice(index, 1)
       io.emit('user:left', {name: username, users: users, messages: messages})
     }
   })
