@@ -61,6 +61,7 @@ class App extends React.Component {
       users: users,
       messages: messages
     })
+    window.scrollTo(0,document.body.scrollHeight)
   }
 
   _userLeft (data) {
@@ -69,6 +70,7 @@ class App extends React.Component {
       users: data.users,
       messages: data.messages
     })
+    window.scrollTo(0,document.body.scrollHeight)
   }
 
   handleMessageSubmit (message) {
