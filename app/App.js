@@ -14,6 +14,8 @@ import fetch from 'node-fetch'
 const socket = io.connect('http://10.0.1.11:8081/')
 var messageList;
 var newUser;
+import dotenv from 'dotenv'
+dotenv.load()
 
 class App extends React.Component {
 
@@ -76,8 +78,7 @@ class App extends React.Component {
   }
 
   getAllMessages () {
-    var url = 'http://localhost:8081/api/messages'
-    fetch(url, { method: 'GET' }
+    fetch(process.env.API_URL, { method: 'GET' }
     ).then(function(response) {
       return response.json()
     }).then(function(data) {
@@ -92,8 +93,7 @@ class App extends React.Component {
     console.log('message sent' + message)
     messageList = document.getElementsByClassName('message-list')
     messageList.scrollTop = messageList.scrollHeight;
-    var url = process.env.API_URL + '/messages'
-    fetch(url, { method: 'POST', body: message }
+    fetch(process.env.API_URL, { method: 'POST', body: message }
     ).then(function(res) {
       return res
     }).then(function(json) {

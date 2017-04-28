@@ -19,6 +19,7 @@ const db = require('./queries.js')
 attach api route logic from queries.js
 **************************************************/
 router.get('/messages', db.getAllMessages);
+router.post('/messages', db.postMessage);
 // router.get('/api/puppies/:id', db.getSinglePuppy);
 // router.post('/api/puppies', db.createPuppy);
 // router.put('/api/puppies/:id', db.updatePuppy);

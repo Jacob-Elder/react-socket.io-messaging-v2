@@ -19,11 +19,6 @@ var db = pgp(config);
 function getAllMessages (req, res, next) {
 	db.any('SELECT * FROM messages')
 	.then(function(data) {
-		// res.status(200).json({
-		// 	status: 'success',
-		// 	data: data,
-		// 	message: 'Got all messages'
-		// })
 		res.send(data)
 	})
 	.catch(function (err) {
