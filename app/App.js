@@ -10,7 +10,8 @@ import MessageList from './components/MessageList/MessageList.js'
 import MessageForm from './components/MessageForm/MessageForm.js'
 import PickUsername from './components/PickUsername/PickUsername.js'
 import io from 'socket.io-client'
-const socket = io.connect('react-messaging.us-west-2.elasticbeanstalk.com')
+import fetch from 'node-fetch'
+const socket = io.connect('http://10.0.1.11:8081/')
 var messageList;
 var newUser;
 
@@ -31,6 +32,7 @@ class App extends React.Component {
     this._userLeft = this._userLeft.bind(this)
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
     this.submitUsername = this.submitUsername.bind(this)
+    this.getAllMessages = this.getAllMessages.bind(this)
   }
 
   componentDidMount () {
@@ -73,14 +75,36 @@ class App extends React.Component {
     window.scrollTo(0,document.body.scrollHeight)
   }
 
+  getAllMessages () {
+    var url = 'http://localhost:8081/api/messages'
+    fetch(url, { method: 'GET' }
+    ).then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      console.log(data);
+    }).catch(function (err) {
+      console.log(err)
+    })
+  }
+
   handleMessageSubmit (message) {
     socket.emit('send:message', message)
     console.log('message sent' + message)
     messageList = document.getElementsByClassName('message-list')
     messageList.scrollTop = messageList.scrollHeight;
+    var url = process.env.API_URL + '/messages'
+    fetch(url, { method: 'POST', body: message }
+    ).then(function(res) {
+      return res
+    }).then(function(json) {
+      console.log(json);
+    }).catch(function (err) {
+      console.log(err)
+    })
   }
 
   render () {
+    this.getAllMessages()
     if (this.state.signedIn) {
       return (
         <MuiThemeProvider>
