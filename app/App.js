@@ -93,7 +93,14 @@ class App extends React.Component {
     console.log('message sent' + message)
     messageList = document.getElementsByClassName('message-list')
     messageList.scrollTop = messageList.scrollHeight;
-    fetch(process.env.API_URL, { method: 'POST', body: message }
+    fetch(process.env.API_URL, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(message)
+    }
     ).then(function(res) {
       return res
     }).then(function(json) {

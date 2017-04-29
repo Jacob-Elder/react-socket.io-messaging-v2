@@ -3,6 +3,7 @@
 const path = require('path');
 const express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser')
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -18,8 +19,9 @@ const db = require('./queries.js')
 /**************************************************
 attach api route logic from queries.js
 **************************************************/
+var jsonParser = bodyParser.json()
 router.get('/messages', db.getAllMessages);
-router.post('/messages', db.postMessage);
+router.post('/messages', jsonParser, db.postMessage);
 // router.get('/api/puppies/:id', db.getSinglePuppy);
 // router.post('/api/puppies', db.createPuppy);
 // router.put('/api/puppies/:id', db.updatePuppy);
@@ -43,6 +45,8 @@ if (isDeveloping) {
       modules: false
     }
   });
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json())
 
   app.use(middleware);
   //prepends /api to the routes
@@ -70,10 +74,8 @@ var users = []
 var messages = []
 io.on('connection', function(socket){
   var username;
-  console.log('connected!')
   
   socket.on('user:join', function(name){
-    console.log(name + ' joined')
     username = name
     users.push(name)
     messages.push({ user: 'BOT', text: name + ' joined'})
@@ -81,15 +83,11 @@ io.on('connection', function(socket){
   })
 
   socket.on('send:message', function(message){
-    console.log('message sent!')
     messages.push(message)
-    console.log('all messages:   ' + messages)
-    console.log(util.inspect(messages, false, null))
     io.emit('send:message', message)
   })
 
   socket.on('disconnect', function(){
-    console.log(username + ' left')
     var index = users.indexOf(username)
     if (username !== undefined) {
       messages.push({ user: 'BOT', text: username + ' left'})

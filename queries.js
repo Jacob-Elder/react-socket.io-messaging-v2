@@ -1,5 +1,7 @@
 var promise = require('bluebird');
 
+var util = require('util')
+
 var options = {
   // Initialization Options
   promiseLib: promise
@@ -27,10 +29,7 @@ function getAllMessages (req, res, next) {
 }
 
 function postMessage (req, res, next) {
-	var name = 'tester'
-	var content = 'this is just test text'
-	console.log(req.body)
-	db.none('insert into messages(name, content)' + 'values(${name}, ${content})'
+	db.none('INSERT INTO messages(name, content) VALUES($1, $2)', [req.body.user, req.body.text]
 	).then(function () {
 		res.status(200)
 		.json({
