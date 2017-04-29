@@ -71,28 +71,24 @@ SET UP SOCKET EVENTS
 var http = require('http').Server(app)
 var io = require('socket.io')(http)
 var users = []
-var messages = []
 io.on('connection', function(socket){
   var username;
   
   socket.on('user:join', function(name){
     username = name
     users.push(name)
-    messages.push({ user: 'BOT', text: name + ' joined'})
-    io.emit('user:join', name, users, messages)
+    io.emit('user:join', name, users)
   })
 
   socket.on('send:message', function(message){
-    messages.push(message)
     io.emit('send:message', message)
   })
 
   socket.on('disconnect', function(){
     var index = users.indexOf(username)
     if (username !== undefined) {
-      messages.push({ user: 'BOT', text: username + ' left'})
       users.splice(index, 1)
-      io.emit('user:left', {name: username, users: users, messages: messages})
+      io.emit('user:left', username, users)
     }
   })
 

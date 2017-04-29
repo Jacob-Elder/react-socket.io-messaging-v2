@@ -53,27 +53,29 @@ class App extends React.Component {
   }
 
   _messageRecieve (message) {
-    console.log('messaged recieved');
     var {messages} = this.state
     messages.push(message)
     this.setState({messages})
     window.scrollTo(0,document.body.scrollHeight)
   }
 
-  _userJoined (name, users, messages) {
+  _userJoined (name, users) {
     console.log(name + ' joined')
+    var {messages} = this.state
+    messages.push({ name: 'BOT', content: name + ' joined' })
     this.setState({
       users: users,
-      messages: messages
+      messages
     })
     window.scrollTo(0,document.body.scrollHeight)
   }
 
-  _userLeft (data) {
-    console.log('user left')
+  _userLeft (name, users) {
+    var {messages} = this.state
+    messages.push({ name: 'BOT', content: name + ' left'})
     this.setState({
-      users: data.users,
-      messages: data.messages
+      users: users,
+      messages
     })
     window.scrollTo(0,document.body.scrollHeight)
   }
@@ -93,24 +95,23 @@ class App extends React.Component {
 
   handleMessageSubmit (message) {
     socket.emit('send:message', message)
-    console.log('message sent' + message)
-    messageList = document.getElementsByClassName('message-list')
-    messageList.scrollTop = messageList.scrollHeight;
-    fetch(process.env.API_URL, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(message)
+    if (message.name !== null && message.content !== null) {
+      fetch(process.env.API_URL, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+      }
+      ).then(function(res) {
+        return res
+      }).then(function(json) {
+        console.log(json);
+      }).catch(function (err) {
+        console.log(err)
+      })
     }
-    ).then(function(res) {
-      return res
-    }).then(function(json) {
-      console.log(json);
-    }).catch(function (err) {
-      console.log(err)
-    })
   }
 
   render () {
