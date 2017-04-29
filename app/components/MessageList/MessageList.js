@@ -12,8 +12,8 @@ class MessageList extends React.Component{
 							<Message 
 								className='message'
 								key={i}
-								user={message.user}
-								text={message.text}
+								user={message.name}
+								text={message.content}
 							/>
 						)
 					})

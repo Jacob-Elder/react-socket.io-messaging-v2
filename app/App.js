@@ -49,6 +49,7 @@ class App extends React.Component {
       signedIn: true
     })
     socket.emit('user:join', name)
+    this.getAllMessages()
   }
 
   _messageRecieve (message) {
@@ -78,11 +79,13 @@ class App extends React.Component {
   }
 
   getAllMessages () {
+    var component = this
     fetch(process.env.API_URL, { method: 'GET' }
     ).then(function(response) {
       return response.json()
     }).then(function(data) {
       console.log(data);
+      component.setState({ messages: data })
     }).catch(function (err) {
       console.log(err)
     })
@@ -111,7 +114,6 @@ class App extends React.Component {
   }
 
   render () {
-    this.getAllMessages()
     if (this.state.signedIn) {
       return (
         <MuiThemeProvider>

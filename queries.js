@@ -1,9 +1,7 @@
 var promise = require('bluebird');
-
 var util = require('util')
 
 var options = {
-  // Initialization Options
   promiseLib: promise
 };
 
@@ -15,9 +13,15 @@ var config = {
   password: process.env.DB_PASS
 }
 
+/****************************************
+set up connection to database
+****************************************/
 var pgp = require('pg-promise')(options);
 var db = pgp(config);
 
+/*****************************************
+Logic for API Routes
+*****************************************/
 function getAllMessages (req, res, next) {
 	db.any('SELECT * FROM messages')
 	.then(function(data) {
